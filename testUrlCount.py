@@ -50,7 +50,7 @@ class salingInfo:
             allUrls = urlFile.readlines()
             for i in range(0,len(allUrls)):
                 url = allUrls[i]
-                formattedUrl = url.replace('\n','').replace('pg','pg1')
+                formattedUrl = url.replace('\n','')
                 # print('formattedUrl',formattedUrl,'self.xlsPaths[i]',self.xlsPaths[i])
                 self.checkProcessCount(formattedUrl,self.xlsPaths[i])
         
@@ -58,7 +58,7 @@ class salingInfo:
 
     # 检查 url 对应的房产数据个数是否符合规矩（如果大于 3000，需要重新调整）
     def checkProcessCount(self, url, xlsPath):
-        response = self.requestUrlByProxy(url)
+        response = self.requestUrlByProxy(url.replace('pg','pg1'))
         print(u'检查 URL：{0}'.format(url))
         # 正则表达式，取出当前 url 会返回多少条结果
         # 因为链家 PC 端，每个 url 最多显示 100 页，每页最多 30 条数据，所以如果返回值大于 3000，则需要重新分拆 url

@@ -7,6 +7,7 @@ import sys
 import lxml
 import time
 
+from logger import logger
 from bs4 import BeautifulSoup
 from generateExcel import generateExcel
 from agentAndProxies import hds
@@ -38,13 +39,15 @@ class worker:
         # 传参使用进行Excel生成
         self.generateExcel = generateExcel()
         self.elementConstant = elementConstant()
+        # logger 初始化
+        self.logger = logger(os.path.join(os.getcwd(),self.city,'worker_{0}.log'.format(self.xlsPathIdentifier)))
 
     # 1）开始
     def start(self):
         self.generateExcel.addSheetExcel(u'在售列表')
         for i in self.generate_allurl(self.pageCount):
             self.get_allurl(i)
-            print(i)
+            self.logger.log.info(i)
         path = os.path.join(os.getcwd(),self.city,'HouseData_{0}.xls'.format(self.xlsPathIdentifier))
         self.generateExcel.saveExcel(path)
 
@@ -63,7 +66,7 @@ class worker:
             re_get = re.findall(re_set, geturl.text)
             for index in range(len(re_get)):
                 self.open_url(re_get[index], index)
-                print(re_get[index])
+                self.logger.log.info(re_get[index])
                 
     # 4）爬取每一套房屋 SKU 的详细数据
     def open_url(self, re_get, index):
@@ -125,7 +128,7 @@ class worker:
             self.infos[u'状态'] = u'在售'
             self.infos[u'城市'] = u'北京'
             
-            print('row:' + str(row))
+            self.logger.log.info('row:' + str(row))
             if row == 0:
                 for index_item in self.elementConstant.data_constant.keys():
                     self.generateExcel.writeExcelPositon(0, self.elementConstant.data_constant.get(index_item),
