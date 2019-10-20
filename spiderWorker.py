@@ -48,7 +48,7 @@ class worker:
         for i in self.generate_allurl(self.pageCount):
             self.get_allurl(i)
             self.logger.log.info(i)
-        path = os.path.join(os.getcwd(),self.city,'HouseData_{0}.xls'.format(self.xlsPathIdentifier))
+        path = os.path.join(os.getcwd(),self.city,'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
         self.generateExcel.saveExcel(path)
 
     # 2）生成需要生成页数的链接
@@ -84,6 +84,8 @@ class worker:
             self.infos[u'楼层'] = soup.select('.subInfo')[0].text
             self.infos[u'装修'] = soup.select('.subInfo')[1].text
             self.infos[u'房子类型'] = soup.select('.subInfo')[2].text
+            if self.infos[u'房子类型'] == u'未知':
+                self.infos[u'房子类型'] = u'-1'  # 导出数据时，为了防止改成 number_format 错误，把字符串换成数值
 
             self.infos[u'小区名称'] = soup.select('.info')[0].text
             self.infos[u'区域'] = soup.select('.info > a')[0].text
