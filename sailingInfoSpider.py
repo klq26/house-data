@@ -77,7 +77,7 @@ class salingInfo:
                     pageCount =  int(totalCount / 30)
                 print(u'[Success] 数据个数：{0}，分页数：{1}'.format(totalCount, pageCount))
                 # woker.py 的文件路径
-                workerPyPath = os.path.join(os.getcwd(),'worker.py')
+                workerPyPath = os.path.join(os.getcwd(),'spiderWorker.py')
                 # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，相关页数，目标文件存储位置
                 args=[r"powershell",workerPyPath,url,str(pageCount),xlsPath,self.city]
                 print(args)
