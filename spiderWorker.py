@@ -13,6 +13,7 @@ from generateExcel import generateExcel
 from agentAndProxies import hds
 from agentAndProxies import GetIpProxy
 from model.elementConstant import elementConstant
+from model.cityConstant import cityConstant
 
 #print ("Start : %s" % time.ctime())
 #print ("End : %s" % time.ctime())
@@ -21,6 +22,7 @@ class worker:
     # 初始化构造函数
     def __init__(self):
         self.elementConstant = elementConstant()
+        self.cityConstant = cityConstant()
         self.getIpProxy = GetIpProxy()
         
         # 因为 {0} 作为参数无法传过来，所以把 pg 替换为 pg{0}
@@ -128,7 +130,7 @@ class worker:
             row = index + (self.page - 1) * 30
             self.infos[u'序号'] = str(row + 1)
             self.infos[u'状态'] = u'在售'
-            self.infos[u'城市'] = u'北京'
+            self.infos[u'城市'] = self.cityConstant.cityToChinese[self.city]
             
             self.logger.log.info('row:' + str(row))
             if row == 0:
@@ -192,8 +194,9 @@ class worker:
                     elif tempItemKey == u'建筑面积':
                         item_valus = item_valus[0:len(item_valus) - 1]
                     elif tempItemKey == u'建成时间':
-                        item_valus = item_valus[0:item_valus.index('年')]
-                    elif tempItemKey == u'关注人数' or tempItemKey == '看过房源':
+                        if u'年' in item_valus:
+                            item_valus = item_valus[0:item_valus.index(u'年')]
+                    elif tempItemKey == u'关注人数' or tempItemKey == u'看过房源':
                         item_valus = item_valus[0:len(item_valus) - 3]
                     elif tempItemKey == u'挂牌时间':
                         item_valus = item_valus.replace('-', '/')
