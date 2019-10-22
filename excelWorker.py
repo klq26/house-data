@@ -17,9 +17,9 @@ class excelWorker:
         self.totalCount = 0
         # 获取 xls 文件集合
         self.xlsFiles = []
-        path = os.path.join(os.getcwd(),self.xlsPathIdentifier)
+        path = os.path.join(os.getcwd(),u'output',self.xlsPathIdentifier)
         # 结果文件路径
-        self.resultPath = os.path.join(os.getcwd(),self.xlsPathIdentifier,u'{0}全部数据.xlsx'.format(self.xlsPathIdentifier))
+        self.resultPath = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier,u'{0}全部数据.xlsx'.format(self.xlsPathIdentifier))
         # 先删除旧文件
         if os.path.exists(self.resultPath):
             os.remove(self.resultPath)
@@ -28,10 +28,6 @@ class excelWorker:
             for name in files:
                 if '.xlsx' in name:
                     self.xlsFiles.append(os.path.join(root,name))
-                    #inwb  = load_workbook(xlsFiles[0])
-                    #获取第一个sheet内容
-                    #ws = inwb.get_sheet_by_name(sheetnames[0])
-                    #count = count + ws.max_row
         
     # 整合多个 xls 文件到一张 xlsx 表
     def combine(self):

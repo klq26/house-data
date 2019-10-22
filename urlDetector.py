@@ -35,9 +35,11 @@ class urlDetector:
         # 代理服务器地址
         self.proxyServer = ()
         # 地址模板
-        self.url = "https://{0}.lianjia.com/ershoufang/bp{1}ep{2}/"
+        self.url = "https://{0}.lianjia.com/ershoufang/pg{1}bp{2}ep{3}/"
+        # 地址结果集
+        self.urls = []
         # logger 初始化
-        self.logger = logger(os.path.join(os.getcwd(),'urlDetector_{0}.log'.format(self.city)))
+        self.logger = logger(os.path.join(os.getcwd(),u'output',self.city,'urlDetector_{0}.log'.format(self.city)))
 
     # 检查 url 对应的 URL 下究竟有多少条数据，好做进一步拆分
     def checkPriceIntervalCount(self):
@@ -50,7 +52,7 @@ class urlDetector:
         
         for i in range(1,len(standardIntervals)):
             #print(u'{0} {1}'.format(standardIntervals[i-1],standardIntervals[i]))
-            url = self.url.format(self.cityConstant.cityToBref[self.city],standardIntervals[i-1],standardIntervals[i])            
+            url = self.url.format(self.cityConstant.cityToBref[self.city],1,standardIntervals[i-1],standardIntervals[i])            
             response = self.requestUrlByProxy(url)
             print(u'检查 URL：{0}'.format(url))
             partent = re.compile('<h2 class="total fl">.*?<span>\s*(.*?)\s</span>.*?</h2>')
@@ -64,11 +66,31 @@ class urlDetector:
                 print(u'[Success] {0}w ~ {1}w 数据个数：{2}，分页数：{3}'.format(standardIntervals[i-1], standardIntervals[i], totalCount, pageCount))
                 self.cityCount = self.cityCount + totalCount
                 self.logger.log.debug(u'{0}-{1}\t{2}\t{3}'.format(standardIntervals[i-1], standardIntervals[i], totalCount, pageCount))
+                # 把结果集暂存
+                self.urls.append(url)
             else:
                 print(u'解析数据个数失败，退出')
                 exit()
         print(u'{0} 总数量为：{1}'.format(self.city,self.cityCount))
         self.logger.log.debug(u'{0}'.format(self.cityCount))
+        print(u'是否输出到 {0} 文件？1：是，其他：否'.format(os.path.join(os.getcwd(),u'output',self.city,u'url.txt')))
+        choice = input()
+        if choice.isdigit and int(choice) == 1:
+            print(u'写入成功')
+            self.outputUrls()
+
+    # 把 url 存入文件已备后续使用
+    def outputUrls(self):
+        path = os.path.join(os.getcwd(),u'output',self.city,u'url.txt')
+        print(path)
+        # 先删除旧文件
+        if os.path.exists(path):
+            os.remove(path)
+        with open(path, 'w') as urlFile:
+            for url in self.urls:
+                url = url.replace(u'pg1',u'pg')
+                urlFile.write(u'{0}\n'.format(url))
+                
 
     # 封装统一 request 请求，采取动态代理和动态修改 User-Agent 方式进行访问设置，减少服务端手动暂停的问题
     def requestUrlByProxy(self, url):

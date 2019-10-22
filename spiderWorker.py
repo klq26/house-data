@@ -42,7 +42,7 @@ class worker:
         self.generateExcel = generateExcel()
         self.elementConstant = elementConstant()
         # logger 初始化
-        self.logger = logger(os.path.join(os.getcwd(),self.city,'worker_{0}.log'.format(self.xlsPathIdentifier)))
+        self.logger = logger(os.path.join(os.getcwd(),u'output',self.city,'worker_{0}.log'.format(self.xlsPathIdentifier)))
 
     # 1）开始
     def start(self):
@@ -50,7 +50,7 @@ class worker:
         for i in self.generate_allurl(self.pageCount):
             self.get_allurl(i)
             self.logger.log.info(i)
-        path = os.path.join(os.getcwd(),self.city,'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
+        path = os.path.join(os.getcwd(),u'output',self.city,'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
         self.generateExcel.saveExcel(path)
 
     # 2）生成需要生成页数的链接
@@ -196,6 +196,9 @@ class worker:
                     elif tempItemKey == u'建成时间':
                         if u'年' in item_valus:
                             item_valus = item_valus[0:item_valus.index(u'年')]
+                        else:
+                            # 有些城市没有建成时间，因为 beautiful soup 的关系，会解析为建筑类型。此时不要这个字段就好了
+                            item_valus = str(-1)
                     elif tempItemKey == u'关注人数' or tempItemKey == u'看过房源':
                         item_valus = item_valus[0:len(item_valus) - 3]
                     elif tempItemKey == u'挂牌时间':

@@ -33,31 +33,22 @@ class salingInfo:
         self.elementConstant = elementConstant()
         # 传参使用进行 Excel 生成
         self.generateExcel = generateExcel()
-        # 文件扩展名
-        self.xlsPaths = []
-        
-        # 读入 Excel 后缀列表
-        path = os.path.join(os.getcwd(),self.city,'filepath.txt')
-        with open(path, 'r') as pathFile:
-            allXlsPaths = pathFile.readlines()
-            for xlsPath in allXlsPaths:
-                self.xlsPaths.append(xlsPath.replace('\n',''))
         
         # 检查 url 列表
         # TODO 后面需要根据不同的 url 开启不同 Python 进程
-        path = os.path.join(os.getcwd(),self.city,'url.txt')
+        path = os.path.join(os.getcwd(), u'output', self.city,'url.txt')
         with open(path, 'r') as urlFile:
             allUrls = urlFile.readlines()
             for i in range(0,len(allUrls)):
                 url = allUrls[i]
                 formattedUrl = url.replace('\n','')
-                # print('formattedUrl',formattedUrl,'self.xlsPaths[i]',self.xlsPaths[i])
-                self.checkProcessCount(formattedUrl,self.xlsPaths[i])
+                # print('formattedUrl',formattedUrl)
+                self.checkProcessCount(formattedUrl)
         
         
 
     # 检查 url 对应的房产数据个数是否符合规矩（如果大于 3000，需要重新调整）
-    def checkProcessCount(self, url, xlsPath):
+    def checkProcessCount(self, url):
         response = self.requestUrlByProxy(url.replace('pg','pg1'))
         print(u'检查 URL：{0}'.format(url))
         # 正则表达式，取出当前 url 会返回多少条结果
@@ -78,8 +69,12 @@ class salingInfo:
                 print(u'[Success] 数据个数：{0}，分页数：{1}'.format(totalCount, pageCount))
                 # woker.py 的文件路径
                 workerPyPath = os.path.join(os.getcwd(),'spiderWorker.py')
-                # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，相关页数，目标文件存储位置
-                args=[r"powershell",workerPyPath,url,str(pageCount),xlsPath,self.city]
+                #test = 'https://bj.lianjia.com/ershoufang/pg1bp0ep100/'
+                partent2 = re.compile('https://.*?/.*?/pg.*?bp(.*?)ep(.*?)/')
+                values = re.findall(partent2, url)
+                fileExt = u'begin{0}_end{1}'.format(values[0][0],values[0][1])
+                # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，相关页数，目标文件存储位置，城市
+                args=[r"powershell",workerPyPath,url,str(pageCount), fileExt, self.city]
                 print(args)
                 # 开新进程，执行任务
                 p = subprocess.Popen(args, stdout=subprocess.PIPE)

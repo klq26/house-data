@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import xlrd
 #import xlwt
-#import sys
 import openpyxl
 
 class generateExcel:

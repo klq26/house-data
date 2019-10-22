@@ -36,28 +36,21 @@ class salingInfo:
         # 文件扩展名
         self.xlsPaths = []
         
-        # 读入 Excel 后缀列表
-        path = os.path.join(os.getcwd(),self.city,'filepath.txt')
-        with open(path, 'r') as pathFile:
-            allXlsPaths = pathFile.readlines()
-            for xlsPath in allXlsPaths:
-                self.xlsPaths.append(xlsPath.replace('\n',''))
-        
         # 检查 url 列表
         # TODO 后面需要根据不同的 url 开启不同 Python 进程
-        path = os.path.join(os.getcwd(),self.city,'url.txt')
+        path = os.path.join(os.getcwd(),u'output',self.city,'url.txt')
         with open(path, 'r') as urlFile:
             allUrls = urlFile.readlines()
             for i in range(0,len(allUrls)):
                 url = allUrls[i]
                 formattedUrl = url.replace('\n','')
-                # print('formattedUrl',formattedUrl,'self.xlsPaths[i]',self.xlsPaths[i])
-                self.checkProcessCount(formattedUrl,self.xlsPaths[i])
+                # print('formattedUrl',formattedUrl)
+                self.checkProcessCount(formattedUrl)
         
         
 
     # 检查 url 对应的房产数据个数是否符合规矩（如果大于 3000，需要重新调整）
-    def checkProcessCount(self, url, xlsPath):
+    def checkProcessCount(self, url):
         response = self.requestUrlByProxy(url.replace('pg','pg1'))
         print(u'检查 URL：{0}'.format(url))
         # 正则表达式，取出当前 url 会返回多少条结果
