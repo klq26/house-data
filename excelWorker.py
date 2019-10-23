@@ -4,11 +4,15 @@
 import sys
 import os
 import openpyxl
+
 from openpyxl.styles import numbers
+from model.cityConstant import cityConstant
 
 class excelWorker:
     # 初始化构造函数
     def __init__(self):
+        # 对应中文名称
+        self.cityConstant = cityConstant()
         # 多文件游标
         self.cursor = 1
         # 取出城市标签，如 beijing
@@ -19,7 +23,7 @@ class excelWorker:
         self.xlsFiles = []
         path = os.path.join(os.getcwd(),u'output',self.xlsPathIdentifier)
         # 结果文件路径
-        self.resultPath = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier,u'{0}全部数据.xlsx'.format(self.xlsPathIdentifier))
+        self.resultPath = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier,u'{0}.xlsx'.format(self.cityConstant.cityToChinese[self.xlsPathIdentifier]))
         # 先删除旧文件
         if os.path.exists(self.resultPath):
             os.remove(self.resultPath)
@@ -61,7 +65,11 @@ class excelWorker:
             
             print(u'{0} 数据条目：{1}'.format(xlsFile,nrows))
             for row in range(2,nrows+1+1):
-                for col in range(1,ncols+1):
+                # 跳过空行，防止 float(x) 崩溃
+                if inws.cell(row,1).value == None:
+                    print(u'[WARNNING] {0} has NoneType Value at {1}'.format(xlsFile,row))
+                    continue
+                for col in range(1,ncols+1):    
                     # 第一列是序号，做一个连贯的
                     if col == 1:
                         outws.cell(self.cursor,col).value = self.cursor - 1
@@ -75,10 +83,18 @@ class excelWorker:
                         outws.cell(self.cursor,col).number_format = '0' 
                     # 房屋单价 房屋总价
                     elif col in [4,5,7]:
-                        outws.cell(self.cursor,col).value = float(inws.cell(row,col).value)
+                        if inws.cell(row,col).value == None:
+                            print(u'[ERROR] {0} has NoneType Value at {1}'.format(xlsFile,row))
+                            outws.cell(self.cursor,col).value = -1
+                        elif u'暂无' in str(inws.cell(row,col).value):
+                            outws.cell(self.cursor,col).value = -1
+                        else:
+                            outws.cell(self.cursor,col).value = float(inws.cell(row,col).value)
                         outws.cell(self.cursor,col).number_format = '0.00'
                     # 建筑面积 关注人数
                     elif col in [7,33]:
+                        if u'暂无' in inws.cell(row,col).value:
+                            outws.cell(self.cursor,col).value = -1
                         outws.cell(self.cursor,col).value = float(inws.cell(row,col).value)
                         outws.cell(self.cursor,col).number_format = '0'
                     else:
@@ -93,7 +109,7 @@ class excelWorker:
             #fileIndex = fileIndex + 1
         # 保存
         #resultXLS.save(self.resultPath)
-        print(u'正在保存文件 {0} 请稍后'.format(self.xlsPathIdentifier))
+        print(u'正在保存文件 {0} 请稍后'.format(self.cityConstant.cityToChinese[self.xlsPathIdentifier]))
         outwb.save(self.resultPath)
         print(u'整合最终数据条目 {0}'.format(self.totalCount))
 

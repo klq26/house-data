@@ -73,8 +73,8 @@ class salingInfo:
                 partent2 = re.compile('https://.*?/.*?/pg.*?bp(.*?)ep(.*?)/')
                 values = re.findall(partent2, url)
                 fileExt = u'begin{0}_end{1}'.format(values[0][0],values[0][1])
-                # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，相关页数，目标文件存储位置，城市
-                args=[r"powershell",workerPyPath,url,str(pageCount), fileExt, self.city]
+                # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，个数，页数，目标文件存储位置，城市
+                args=[r"powershell", workerPyPath, url, str(totalCount), str(pageCount), fileExt, self.city]
                 print(args)
                 # 开新进程，执行任务
                 p = subprocess.Popen(args, stdout=subprocess.PIPE)

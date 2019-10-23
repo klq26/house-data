@@ -26,11 +26,12 @@ class worker:
         self.getIpProxy = GetIpProxy()
         
         # 因为 {0} 作为参数无法传过来，所以把 pg 替换为 pg{0}
-        # 获取参数：1：url 2：pageCount 3：xlsPath 唯一标识
+        # 获取参数：1：url 2：totalCount 3：pageCount 4：xlsPath 唯一标识 5：城市
         self.url = str(sys.argv[1]).replace('pg','pg{0}')
-        self.pageCount = int(sys.argv[2])
-        self.xlsPathIdentifier = str(sys.argv[3])
-        self.city = sys.argv[4]
+        self.totalCount = int(sys.argv[2])
+        self.pageCount = int(sys.argv[3])
+        self.xlsPathIdentifier = str(sys.argv[4])
+        self.city = sys.argv[5]
         # debug
         #self.url = 'https://bj.lianjia.com/ershoufang/pinggu/pg/'.replace('pg','pg{0}')
         #self.pageCount = 3
@@ -69,6 +70,8 @@ class worker:
             for index in range(len(re_get)):
                 self.open_url(re_get[index], index)
                 self.logger.log.info(re_get[index])
+                # 增加休眠时间，防止服务器拒绝
+                #time.sleep(1.5)
                 
     # 4）爬取每一套房屋 SKU 的详细数据
     def open_url(self, re_get, index):
@@ -132,7 +135,7 @@ class worker:
             self.infos[u'状态'] = u'在售'
             self.infos[u'城市'] = self.cityConstant.cityToChinese[self.city]
             
-            self.logger.log.info('row:' + str(row))
+            self.logger.log.info('row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
             if row == 0:
                 for index_item in self.elementConstant.data_constant.keys():
                     self.generateExcel.writeExcelPositon(0, self.elementConstant.data_constant.get(index_item),
@@ -210,8 +213,8 @@ class worker:
                                                           self.elementConstant.data_constant.get(tempItemKey),
                                                           item_valus)
 
-if len(sys.argv) >= 4:
-    print(u'[Params] {0} {1} {2} {3}'.format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4]))
+if len(sys.argv) >= 5:
+    print(u'[Params] {0} {1} {2} {3} {4}'.format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]))
 else:
     print(u'[ERROR] 参数不足')
 worker = worker()
