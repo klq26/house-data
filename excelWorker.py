@@ -40,7 +40,9 @@ class excelWorker:
             exit()
         # 创建文件
         outwb = openpyxl.Workbook()#打开一个将写的文件
-        outws = outwb.create_sheet(title=u'在售列表')#在将写的文件创建sheet
+        #outws = outwb.create_sheet(title=u'在售列表')#在将写的文件创建sheet
+        outws = outwb.active
+        outws.title = u'在售列表'
         # style
         font = openpyxl.styles.Font(u'Arial', size = 10, color='000000')
         

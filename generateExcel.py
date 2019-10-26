@@ -25,4 +25,5 @@ class generateExcel:
     def addSheetExcel(self, sheetName):
         #self.ws = self.wb.add_sheet(sheetName,cell_overwrite_ok=True)
         # openxlpy 适配
-        self.ws = self.wb.create_sheet(title=sheetName)
+        self.ws = self.wb.active
+        self.ws.title = sheetName

@@ -86,7 +86,7 @@ class urlDetector:
         # 先删除旧文件
         if os.path.exists(path):
             os.remove(path)
-        with open(path, 'w') as urlFile:
+        with open(path,'w',encoding='utf-8') as urlFile:
             for url in self.urls:
                 url = url.replace(u'pg1',u'pg')
                 urlFile.write(u'{0}\n'.format(url))

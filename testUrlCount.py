@@ -39,7 +39,7 @@ class salingInfo:
         # 检查 url 列表
         # TODO 后面需要根据不同的 url 开启不同 Python 进程
         path = os.path.join(os.getcwd(),u'output',self.city,'url.txt')
-        with open(path, 'r') as urlFile:
+        with open(path,'r',encoding='utf-8') as urlFile:
             allUrls = urlFile.readlines()
             for i in range(0,len(allUrls)):
                 url = allUrls[i]
