@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import random
 import os
-import subprocess
+from concurrent.futures import ThreadPoolExecutor
 import re
 import requests
 import sys
 import lxml
 
 from bs4 import BeautifulSoup
-from generateExcel import generateExcel
 from agentAndProxies import hds
 from agentAndProxies import GetIpProxy
-from model.elementConstant import elementConstant
+
+from spiderWorker import spiderWorker
 
 class salingInfo:
     # 初始化构造函数
@@ -25,30 +25,35 @@ class salingInfo:
         # 创建动态 IP 池
         self.getIpProxy = GetIpProxy()
         self.url = "https://bj.lianjia.com/ershoufang/pg{}/"
-        # 每套房的各种字段暂存（最终会写入 Excel 或通过 DataFrame 写入本地文件）
-        self.infos = {}
         # 代理服务器地址
         self.proxyServer = ()
-        # 写入 Excel 的 Column 号与字符串对照常量
-        self.elementConstant = elementConstant()
-        # 传参使用进行 Excel 生成
-        self.generateExcel = generateExcel()
-        
+        # CPU 进程数，如 4 核心 4 线程，或者 6 核心 12 线程
+        self.cpuCount = os.cpu_count()
+        processCount = self.cpuCount
+        if self.cpuCount < 10:
+            processCount = 10
+        elif self.cpuCount > 10 and self.cpuCount < 16:
+            processCount = 16
+        # 进程池
+        self.poolExecutor = ThreadPoolExecutor(max_workers=processCount)
+        print(u'当前 CPU 核心数：{0} 将要开启的进程数：{1}'.format(self.cpuCount, processCount))
         # 检查 url 列表
         # TODO 后面需要根据不同的 url 开启不同 Python 进程
         path = os.path.join(os.getcwd(), u'output', self.city,'url.txt')
         with open(path,'r',encoding='utf-8') as urlFile:
-            allUrls = urlFile.readlines()
+            allUrls = [url.replace('\n','') for url in urlFile.readlines()]
             for i in range(0,len(allUrls)):
                 url = allUrls[i]
-                formattedUrl = url.replace('\n','')
-                # print('formattedUrl',formattedUrl)
-                self.checkProcessCount(formattedUrl)
-        
-        
-
+                #self.checkProcessCount(url)
+                task = self.poolExecutor.submit(self.checkProcessCount, url, i+1)
+                task.add_done_callback(self.workerCallback)
+            self.poolExecutor.shutdown(wait=True)
+    
+    def workerCallback(self,future):
+        print(future.result())
+    
     # 检查 url 对应的房产数据个数是否符合规矩（如果大于 3000，需要重新调整）
-    def checkProcessCount(self, url):
+    def checkProcessCount(self, url, index):
         response = self.requestUrlByProxy(url.replace('pg','pg1'))
         print(u'检查 URL：{0}'.format(url))
         # 正则表达式，取出当前 url 会返回多少条结果
@@ -75,17 +80,19 @@ class salingInfo:
                 fileExt = u'begin{0}_end{1}'.format(values[0][0],values[0][1])
                 # 参数方面：调用 powershell，指向 woker.py 路径，传入聚合 url，个数，页数，目标文件存储位置，城市
                 args=[r"powershell", workerPyPath, url, str(totalCount), str(pageCount), fileExt, self.city]
-                print(args)
+                #print(args)
                 # 开新进程，执行任务
-                p = subprocess.Popen(args, stdout=subprocess.PIPE)
-                
+                #p = subprocess.Popen(args, stdout=subprocess.PIPE)
+                worker = spiderWorker()
+                worker.prepare(url, totalCount, pageCount, fileExt, self.city, index)
+                worker.start()
+                return {'index':index,'task':fileExt}
         else:
             print(u'解析数据个数失败，退出')
             exit()
 
     # 封装统一 request 请求，采取动态代理和动态修改 User-Agent 方式进行访问设置，减少服务端手动暂停的问题
     def requestUrlByProxy(self, url):
-
         try:
             if len(self.proxyServer) == 0:
                 tempProxyServer = self.getIpProxy.get_random_ip()

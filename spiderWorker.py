@@ -18,22 +18,16 @@ from model.cityConstant import cityConstant
 #print ("Start : %s" % time.ctime())
 #print ("End : %s" % time.ctime())
 
-class worker:
+class spiderWorker:
     # 初始化构造函数
     def __init__(self):
         self.elementConstant = elementConstant()
         self.cityConstant = cityConstant()
         self.getIpProxy = GetIpProxy()
-        
-        # 因为 {0} 作为参数无法传过来，所以把 pg 替换为 pg{0}
-        # 获取参数：1：url 2：totalCount 3：pageCount 4：xlsPath 唯一标识 5：城市
-        self.url = str(sys.argv[1]).replace('pg','pg{0}')
-        self.totalCount = int(sys.argv[2])
-        self.pageCount = int(sys.argv[3])
-        self.xlsPathIdentifier = str(sys.argv[4])
-        self.city = sys.argv[5]
+        self.url = u''
         # debug
         #self.url = 'https://bj.lianjia.com/ershoufang/pinggu/pg/'.replace('pg','pg{0}')
+        #self.totalCount = 90
         #self.pageCount = 3
         #self.xlsPathIdentifier = 'pinggu'
         #self.city = 'beijing'
@@ -42,16 +36,33 @@ class worker:
         # 传参使用进行Excel生成
         self.generateExcel = generateExcel()
         self.elementConstant = elementConstant()
-        # logger 初始化
-        self.logger = logger(os.path.join(os.getcwd(),u'output',self.city,'worker_{0}.log'.format(self.xlsPathIdentifier)))
+        
 
+    # 0）准备工作
+    # 获取参数：1：url 2：totalCount 3：pageCount 4：xlsPath 唯一标识 5：城市
+    def prepare(self,url,totalCount,pageCount,xlsPathIdentifier,city,taskIndex = 1):
+        # 因为 {0} 作为参数无法传过来，所以把 pg 替换为 pg{0}
+        self.url = str(url).replace('pg','pg{0}')
+        self.totalCount = int(totalCount)
+        self.pageCount = int(pageCount)
+        self.xlsPathIdentifier = str(xlsPathIdentifier)
+        self.city = str(city)
+        self.dateFolder = time.strftime("%Y%m", time.localtime())
+        self.taskIndex = taskIndex
+        # logger 初始化
+        self.outputFolder = os.path.join(os.getcwd(), u'output', self.city, self.dateFolder)
+        if not os.path.exists(self.outputFolder):
+            os.makedirs(self.outputFolder)
+        self.logger = logger(os.path.join(self.outputFolder, 'worker_{0}.log'.format(self.xlsPathIdentifier)))
+        
     # 1）开始
     def start(self):
+        assert self.url != '',u'[ERROR] 应该先调用 prepare 函数进行初始化再使用'
         self.generateExcel.addSheetExcel(u'在售列表')
         for i in self.generate_allurl(self.pageCount):
             self.get_allurl(i)
             self.logger.log.info(i)
-        path = os.path.join(os.getcwd(),u'output',self.city,'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
+        path = os.path.join(self.outputFolder, 'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
         self.generateExcel.saveExcel(path)
 
     # 2）生成需要生成页数的链接
@@ -135,7 +146,7 @@ class worker:
             self.infos[u'状态'] = u'在售'
             self.infos[u'城市'] = self.cityConstant.cityToChinese[self.city]
             
-            self.logger.log.info('row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
+            self.logger.log.info('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
             if row == 0:
                 for index_item in self.elementConstant.data_constant.keys():
                     self.generateExcel.writeExcelPositon(0, self.elementConstant.data_constant.get(index_item),
@@ -150,7 +161,6 @@ class worker:
 
     # 封装统一 request 请求,采取动态代理和动态修改 User-Agent 方式进行访问设置,减少服务端手动暂停的问题
     def requestUrlForRe(self, url):
-
         try:
             if len(self.proxyServer) == 0:
                 tempProxyServer = self.getIpProxy.get_random_ip()
@@ -213,9 +223,12 @@ class worker:
                                                           self.elementConstant.data_constant.get(tempItemKey),
                                                           item_valus)
 
-if len(sys.argv) >= 5:
-    print(u'[Params] {0} {1} {2} {3} {4}'.format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]))
-else:
-    print(u'[ERROR] 参数不足')
-worker = worker()
-worker.start()
+if "__name__" == "__main__":
+    if len(sys.argv) >= 5:
+        print(u'[Params] {0} {1} {2} {3} {4}'.format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]))
+        worker = spiderWorker()
+        worker.prepare(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+        worker.start()
+    else:
+        print(u'[ERROR] 参数不足')
+    
