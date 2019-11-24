@@ -18,6 +18,7 @@ from model.cityConstant import cityConstant
 #print ("Start : %s" % time.ctime())
 #print ("End : %s" % time.ctime())
 
+
 class spiderWorker:
     # 初始化构造函数
     def __init__(self):
@@ -36,13 +37,12 @@ class spiderWorker:
         # 传参使用进行Excel生成
         self.generateExcel = generateExcel()
         self.elementConstant = elementConstant()
-        
 
     # 0）准备工作
     # 获取参数：1：url 2：totalCount 3：pageCount 4：xlsPath 唯一标识 5：城市
-    def prepare(self,url,totalCount,pageCount,xlsPathIdentifier,city,taskIndex = 1):
+    def prepare(self, url, totalCount, pageCount, xlsPathIdentifier, city, taskIndex=1):
         # 因为 {0} 作为参数无法传过来，所以把 pg 替换为 pg{0}
-        self.url = str(url).replace('pg','pg{0}')
+        self.url = str(url).replace('pg', 'pg{0}')
         self.totalCount = int(totalCount)
         self.pageCount = int(pageCount)
         self.xlsPathIdentifier = str(xlsPathIdentifier)
@@ -50,40 +50,48 @@ class spiderWorker:
         self.dateFolder = time.strftime("%Y%m", time.localtime())
         self.taskIndex = taskIndex
         # logger 初始化
-        self.outputFolder = os.path.join(os.getcwd(), u'output', self.city, self.dateFolder)
+        self.outputFolder = os.path.join(
+            os.getcwd(), u'output', self.city, self.dateFolder)
         if not os.path.exists(self.outputFolder):
             os.makedirs(self.outputFolder)
-        self.logger = logger(os.path.join(self.outputFolder, 'worker_{0}.log'.format(self.xlsPathIdentifier)))
-        
+        #self.logger = logger(os.path.join(self.outputFolder, 'worker_{0}.log'.format(self.xlsPathIdentifier)))
+        self.logger = open(os.path.join(self.outputFolder, 'worker_{0}.log'.format(
+            self.xlsPathIdentifier)), 'w', encoding='utf-8')
+
     # 1）开始
     def start(self):
-        assert self.url != '',u'[ERROR] 应该先调用 prepare 函数进行初始化再使用'
+        assert self.url != '', u'[ERROR] 应该先调用 prepare 函数进行初始化再使用'
         self.generateExcel.addSheetExcel(u'在售列表')
         for i in self.generate_allurl(self.pageCount):
             self.get_allurl(i)
-            self.logger.log.info(i)
-        path = os.path.join(self.outputFolder, 'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
+            # self.logger.log.info(i)
+            self.logger.write(i + '\n')
+        path = os.path.join(
+            self.outputFolder, 'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
         self.generateExcel.saveExcel(path)
+        self.logger.close()
 
     # 2）生成需要生成页数的链接
     def generate_allurl(self, pageCount):
         for url_next in range(1, pageCount + 1):
             self.page = url_next
             yield self.url.format(url_next)
-    
+
     # 3）从每个聚合列表页下，获取所有房产卡片数据
     def get_allurl(self, generate_allurl):
         geturl = self.requestUrlForRe(generate_allurl)
         if geturl.status_code == 200:
             # 提取 title 跳转地址　对应每套商品房 SKU
-            re_set = re.compile('<div class="item*?".*?<a.*?class="img.*?".*?href="(.*?)"')
+            re_set = re.compile(
+                '<div class="item*?".*?<a.*?class="img.*?".*?href="(.*?)"')
             re_get = re.findall(re_set, geturl.text)
             for index in range(len(re_get)):
                 self.open_url(re_get[index], index)
-                self.logger.log.info(re_get[index])
+                # self.logger.log.info(re_get[index])
+                self.logger.write(re_get[index] + '\n')
                 # 增加休眠时间，防止服务器拒绝
-                #time.sleep(1.5)
-                
+                # time.sleep(1.5)
+
     # 4）爬取每一套房屋 SKU 的详细数据
     def open_url(self, re_get, index):
         res = self.requestUrlForRe(re_get)
@@ -101,7 +109,8 @@ class spiderWorker:
             self.infos[u'装修'] = soup.select('.subInfo')[1].text
             self.infos[u'房子类型'] = soup.select('.subInfo')[2].text
             if self.infos[u'房子类型'] == u'未知':
-                self.infos[u'房子类型'] = u'-1'  # 导出数据时，为了防止改成 number_format 错误，把字符串换成数值
+                # 导出数据时，为了防止改成 number_format 错误，把字符串换成数值
+                self.infos[u'房子类型'] = u'-1'
 
             self.infos[u'小区名称'] = soup.select('.info')[0].text
             self.infos[u'区域'] = soup.select('.info > a')[0].text
@@ -111,7 +120,8 @@ class spiderWorker:
             self.infos[u'关注房源'] = soup.select('#favCount')[0].text + u"人关注"
             self.infos[u'看过房源'] = soup.select('#cartCount')[0].text + u"人看过"
 
-            partent = re.compile('<li><span.*?class="label">(.*?)</span>(.*?)</li>')
+            partent = re.compile(
+                '<li><span.*?class="label">(.*?)</span>(.*?)</li>')
             result = re.findall(partent, res.text)
 
             for item in result:
@@ -119,13 +129,14 @@ class spiderWorker:
                     self.infos[item[0]] = item[1]
                 if item[0] == u'产权年限':
                     self.infos[u'产权年限'] = item[1]
-            
+
             # 挂牌时间等信息，格式有变化，重新添加正则表达式
-            partent = re.compile('<li>\s*<span.*?class=.*?>(.*?)</span>\s+<span>(.*?)</span>\s+</li>')
+            partent = re.compile(
+                '<li>\s*<span.*?class=.*?>(.*?)</span>\s+<span>(.*?)</span>\s+</li>')
             result = re.findall(partent, res.text)
 
             for item in result:
-                #print unicode(item[0]),unicode(item[1])
+                # print unicode(item[0]),unicode(item[1])
                 if item[0] == u'挂牌时间':
                     self.infos[u'挂牌时间'] = item[1]
                 if item[0] == u'交易权属':
@@ -139,18 +150,22 @@ class spiderWorker:
                 if item[0] == u'产权所属':
                     self.infos[u'产权所属'] = item[1]
                 if item[0] == u'房本备件':
-                    self.infos[u'房本备件'] = item[1]    
-            
+                    self.infos[u'房本备件'] = item[1]
+
             row = index + (self.page - 1) * 30
             self.infos[u'序号'] = str(row + 1)
             self.infos[u'状态'] = u'在售'
             self.infos[u'城市'] = self.cityConstant.cityToChinese[self.city]
-            
-            self.logger.log.info('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
+
+            # self.logger.log.info('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
+            print('pid: [' + str(os.getppid()) + '] taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%\n'.format(self.totalCount, round(float(row)/self.totalCount * 100, 2)))
+            self.logger.write('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) +
+                              ' / {0} {1}%\n'.format(self.totalCount, round(float(row)/self.totalCount * 100, 2)))
+            self.logger.flush()
             if row == 0:
                 for index_item in self.elementConstant.data_constant.keys():
                     self.generateExcel.writeExcelPositon(0, self.elementConstant.data_constant.get(index_item),
-                                                          index_item)
+                                                         index_item)
 
                 self.wirte_source_data(1)
 
@@ -170,7 +185,8 @@ class spiderWorker:
             proxy_dict = {
                 tempProxyServer[0]: tempProxyServer[1]
             }
-            tempUrl = requests.get(url, headers=hds[random.randint(0, len(hds) - 1)], proxies=proxy_dict)
+            tempUrl = requests.get(
+                url, headers=hds[random.randint(0, len(hds) - 1)], proxies=proxy_dict)
 
             code = tempUrl.status_code
             if code >= 200 or code < 300:
@@ -187,13 +203,17 @@ class spiderWorker:
 
     # 源数据生成,写入Excel中,从infos字典中读取数据,放置到list列表中进行写入操作,其中可修改规定写入格式
     def wirte_source_data(self, row):
-        for itemKey in self.infos.keys():            
+        for itemKey in self.infos.keys():
             item_valus = self.infos.get(itemKey)
             if itemKey == u'详细区域':
-                temps_item_valus = item_valus.replace(u'\xa0',u' ').split(u' ')
-                self.generateExcel.writeExcelPositon(row, self.elementConstant.data_constant.get(u'所属下辖区'),temps_item_valus[0])
-                self.generateExcel.writeExcelPositon(row, self.elementConstant.data_constant.get(u'所属商圈'),temps_item_valus[1])
-                self.generateExcel.writeExcelPositon(row, self.elementConstant.data_constant.get(u'所属环线'),temps_item_valus[2])
+                temps_item_valus = item_valus.replace(
+                    u'\xa0', u' ').split(u' ')
+                self.generateExcel.writeExcelPositon(
+                    row, self.elementConstant.data_constant.get(u'所属下辖区'), temps_item_valus[0])
+                self.generateExcel.writeExcelPositon(
+                    row, self.elementConstant.data_constant.get(u'所属商圈'), temps_item_valus[1])
+                self.generateExcel.writeExcelPositon(
+                    row, self.elementConstant.data_constant.get(u'所属环线'), temps_item_valus[2])
             else:
                 tempItemKey = self.elementConstant.unit_check_name(itemKey)
                 count = self.elementConstant.data_constant.get(tempItemKey)
@@ -220,15 +240,18 @@ class spiderWorker:
                         item_valus = item_valus.replace('-', '/')
 
                     self.generateExcel.writeExcelPositon(row,
-                                                          self.elementConstant.data_constant.get(tempItemKey),
-                                                          item_valus)
+                                                         self.elementConstant.data_constant.get(
+                                                             tempItemKey),
+                                                         item_valus)
+
 
 if "__name__" == "__main__":
     if len(sys.argv) >= 5:
-        print(u'[Params] {0} {1} {2} {3} {4}'.format(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]))
+        print(u'[Params] {0} {1} {2} {3} {4}'.format(
+            sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]))
         worker = spiderWorker()
-        worker.prepare(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5])
+        worker.prepare(sys.argv[1], sys.argv[2],
+                       sys.argv[3], sys.argv[4], sys.argv[5])
         worker.start()
     else:
         print(u'[ERROR] 参数不足')
-    

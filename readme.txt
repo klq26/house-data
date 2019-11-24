@@ -1,7 +1,7 @@
-ËµÃ÷
+è¯´æ˜
 
-1. µ÷ÓÃ python sailingInfoSpider.py beijing ¿ÉÒÔ²éÑ¯ output\beijing Ä¿Â¼ÏÂ url.txt ÖĞµÄËùÓĞÉ¸Ñ¡ÁĞ±íÒ³Êı¾İ¡£
-2. url.txt ÊÇÓÉ python urlDetector.py beijing Éú³É¡£¾ßÌåµÄÇĞ¸îÄ£Ê½²Î¿´ cityConstants.py¡£
-3. Êµ¼Ê²éÕÒÇ°£¬½¨ÒéÏÈµ÷ÓÃ python testUrlCount.txt ¿´¿´Ö®Ç°µÄÉ¸Ñ¡Ìõ¼şÊÇ·ñÒç³ö£¬¼´É¸Ñ¡½á¹û´óÓÚ 3000 Ìõ£¬Ò³Êı´óÓÚ 100£¬Èç´ËÔòĞèÒªÖØĞÂµ÷Õû url.txt ±£Ö¤Ã¿Ìõ url ÏÂµÄÉ¸Ñ¡ÁĞ±í½á¹ûÊıÉÙÓÚ 3000 Ìõ¡£
-4. Èç¹û·¢Éú worker.py ¿¨ËÀµÄÇé¿ö£¬¿ÉÒÔÔÚ¸Ã´°¿ÚÉÏ£¬¸´ÖÆ³öµ÷¶ÈÆ÷ sailingInfoSpider.py ´«µİ¹ıÀ´µÄ²ÎÊı£¬ÒÔÈ·¶¨¾ßÌåÊÇÄÄ¸ö worker ¿¨ËÀ£¬ÔÙÊÖ¶¯ÖØĞÂÖ´ĞĞ worker ¼´¿É£¬Èç¡°python worker.py https://xxx 3 huairou beijing¡±
-5. ³¢ÊÔÔÚ worker.py ÖĞÔö¼Ó time.sleep(x) ½µµÍ²éÑ¯ÆµÂÊ£¬·ÀÖ¹±»·şÎñÆ÷¾Ü¾ø¡£
+1. è°ƒç”¨ python sailingInfoSpider.py beijing å¯ä»¥æŸ¥è¯¢ output\beijing ç›®å½•ä¸‹ url.txt ä¸­çš„æ‰€æœ‰ç­›é€‰åˆ—è¡¨é¡µæ•°æ®ã€‚
+2. url.txt æ˜¯ç”± python urlDetector.py beijing ç”Ÿæˆã€‚å…·ä½“çš„åˆ‡å‰²æ¨¡å¼å‚çœ‹ cityConstants.pyã€‚
+3. å®é™…æŸ¥æ‰¾å‰ï¼Œå»ºè®®å…ˆè°ƒç”¨ python testUrlCount.txt çœ‹çœ‹ä¹‹å‰çš„ç­›é€‰æ¡ä»¶æ˜¯å¦æº¢å‡ºï¼Œå³ç­›é€‰ç»“æœå¤§äº 3000 æ¡ï¼Œé¡µæ•°å¤§äº 100ï¼Œå¦‚æ­¤åˆ™éœ€è¦é‡æ–°è°ƒæ•´ url.txt ä¿è¯æ¯æ¡ url ä¸‹çš„ç­›é€‰åˆ—è¡¨ç»“æœæ•°å°‘äº 3000 æ¡ã€‚
+4. å¦‚æœå‘ç”Ÿ worker.py å¡æ­»çš„æƒ…å†µï¼Œå¯ä»¥åœ¨è¯¥çª—å£ä¸Šï¼Œå¤åˆ¶å‡ºè°ƒåº¦å™¨ sailingInfoSpider.py ä¼ é€’è¿‡æ¥çš„å‚æ•°ï¼Œä»¥ç¡®å®šå…·ä½“æ˜¯å“ªä¸ª worker å¡æ­»ï¼Œå†æ‰‹åŠ¨é‡æ–°æ‰§è¡Œ worker å³å¯ï¼Œå¦‚â€œpython worker.py https://xxx 3 huairou beijingâ€
+5. å°è¯•åœ¨ worker.py ä¸­å¢åŠ  time.sleep(x) é™ä½æŸ¥è¯¢é¢‘ç‡ï¼Œé˜²æ­¢è¢«æœåŠ¡å™¨æ‹’ç»ã€‚
