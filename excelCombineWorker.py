@@ -3,29 +3,32 @@
 #import xlwt
 import sys
 import os
+import time
 import openpyxl
 
 from openpyxl.styles import numbers
 from model.cityConstant import cityConstant
 
 
-class excelWorker:
+class excelCombineWorker:
     # 初始化构造函数
-    def __init__(self):
+    def __init__(self, city):
         # 对应中文名称
         self.cityConstant = cityConstant()
         # 多文件游标
         self.cursor = 1
         # 取出城市标签，如 beijing
-        self.xlsPathIdentifier = str(sys.argv[1])
+        self.xlsPathIdentifier = city
         # 最终整表数据个数
         self.totalCount = 0
         # 获取 xls 文件集合
         self.xlsFiles = []
-        path = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier)
+        self.dateFolder = time.strftime("%Y%m", time.localtime())
+        path = os.path.join(os.getcwd(), u'output',
+                            self.xlsPathIdentifier, self.dateFolder)
         # 结果文件路径
-        self.resultPath = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier, u'{0}.xlsx'.format(
-            self.cityConstant.cityToChinese[self.xlsPathIdentifier]))
+        self.resultPath = os.path.join(os.getcwd(), u'output', self.xlsPathIdentifier, u'{0}{1}.xlsx'.format(
+            self.cityConstant.cityToChinese[self.xlsPathIdentifier], self.dateFolder))
         # 先删除旧文件
         if os.path.exists(self.resultPath):
             os.remove(self.resultPath)
@@ -120,11 +123,17 @@ class excelWorker:
             #fileIndex = fileIndex + 1
         # 保存
         # resultXLS.save(self.resultPath)
-        print(u'正在保存文件 {0} 请稍后'.format(
-            self.cityConstant.cityToChinese[self.xlsPathIdentifier]))
+        print(u'正在保存文件 {0}{1}.xlsx 请稍后'.format(
+            self.cityConstant.cityToChinese[self.xlsPathIdentifier], self.dateFolder))
         outwb.save(self.resultPath)
         print(u'整合最终数据条目 {0}'.format(self.totalCount))
 
 
-worker = excelWorker()
-worker.combine()
+if __name__ == "__main__":
+    city = ''
+    if len(sys.argv) >= 2:
+        city = str(sys.argv[1])
+        worker = excelCombineWorker(city)
+        worker.combine()
+    else:
+        print(u'[ERROR] 参数不足，需要城市的拼音，如 beijing')

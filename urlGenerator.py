@@ -17,7 +17,10 @@ class urlGenerator:
         # 根据 beijing 生成 bj 本地字典
         self.cityBref = self.cityConstant.cityToBref[self.city]
         # 生成占位链接
-        self.urlHolder = u'https://' + self.cityBref + '.lianjia.com/ershoufang/pgbp{0}ep{1}/'
+        self.urlHolder = u'https://' + self.cityBref + \
+            '.lianjia.com/ershoufang/pgbp{0}ep{1}/'
+        self.logFileHolder = u'worker_begin{0}_end{1}.log'
+        self.outputFileHolder = u'HouseData_begin{0}_end{1}.xlsx'
 
     # 把 0w ~ 10000w 的房屋信息近似分成 2000+ 一个区间，供后续 worker 抓取信息
     def intelligentDetect(self, interval=5, expectLow=2000, expectHigh=3000):
@@ -54,12 +57,12 @@ class urlGenerator:
             requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
             response = requests.get(url.replace('pg', 'pg1'), verify=False)
             #print(u'检查 URL：{0}'.format(url))
-            partent = re.compile('<h2 class="total fl">.*?<span>\s*(.*?)\s</span>.*?</h2>')
+            partent = re.compile(
+                '<h2 class="total fl">.*?<span>\s*(.*?)\s</span>.*?</h2>')
             result = re.findall(partent, response.text)
             if len(result) > 0:
                 totalCount = int(result[0])
-                print(u'{0}\t{1}'.format(url,totalCount))
-
+                print(u'{0}\t{1}'.format(url, totalCount))
 
             if totalCount < expectLow:
                 if isFallback:
@@ -68,8 +71,12 @@ class urlGenerator:
                         pageCount = int(totalCount / 30) + 1
                     else:
                         pageCount = int(totalCount / 30)
-                    print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(url, totalCount, pageCount))
-                    durations.append({u'url' : url, u'totalCount' : totalCount, u'pageCount' : pageCount})
+                    print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(
+                        url, totalCount, pageCount))
+                    logFile = self.logFileHolder.format(begin, end)
+                    xlsxFile = self.outputFileHolder.format(begin, end)
+                    durations.append({u'url': url, u'totalCount': totalCount, u'pageCount': pageCount,
+                                      u'logFile': logFile, u'xlsxFile': xlsxFile, u'city': self.city})
                     begin = end
                     end = end + interval
                     totalCount = 0
@@ -83,8 +90,12 @@ class urlGenerator:
                     pageCount = int(totalCount / 30) + 1
                 else:
                     pageCount = int(totalCount / 30)
-                print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(url, totalCount, pageCount))
-                durations.append({u'url' : url, u'totalCount' : totalCount, u'pageCount' : pageCount})
+                print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(
+                    url, totalCount, pageCount))
+                logFile = self.logFileHolder.format(begin, end)
+                xlsxFile = self.outputFileHolder.format(begin, end)
+                durations.append({u'url': url, u'totalCount': totalCount, u'pageCount': pageCount,
+                                  u'logFile': logFile, u'xlsxFile': xlsxFile, u'city': self.city})
                 begin = end
                 end = end + interval
                 totalCount = 0
@@ -102,8 +113,12 @@ class urlGenerator:
                     pageCount = int(totalCount / 30) + 1
                 else:
                     pageCount = int(totalCount / 30)
-                print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(url, totalCount, pageCount))
-                durations.append({u'url' : url, u'totalCount' : totalCount, u'pageCount' : pageCount})
+                print(u'\n★ 价格区间：{0}\t{1}\t{2}\n'.format(
+                    url, totalCount, pageCount))
+                logFile = self.logFileHolder.format(begin, end)
+                xlsxFile = self.outputFileHolder.format(begin, end)
+                durations.append({u'url': url, u'totalCount': totalCount, u'pageCount': pageCount,
+                                  u'logFile': logFile, u'xlsxFile': xlsxFile, u'city': self.city})
                 begin = end
                 end = end + interval
                 totalCount = expectHigh + 1
@@ -111,9 +126,12 @@ class urlGenerator:
 
             # 别太频繁，防止链家屏蔽
             time.sleep(0.5)
-        filepath = os.path.join(os.getcwd(),u'output',self.city,'{0}.json'.format(self.city))
-        with open(filepath,'w+',encoding='utf-8') as jsonFile:
-            jsonFile.write(json.dumps(durations, ensure_ascii=False, sort_keys = True, indent = 4, separators=(',', ':')))
+        filepath = os.path.join(os.getcwd(), u'output',
+                                self.city, '{0}.json'.format(self.city))
+        with open(filepath, 'w+', encoding='utf-8') as jsonFile:
+            jsonFile.write(json.dumps(durations, ensure_ascii=False,
+                                      sort_keys=True, indent=4, separators=(',', ':')))
+
 
 if __name__ == '__main__':
     # 根据 beijing 生成 bj 本地字典

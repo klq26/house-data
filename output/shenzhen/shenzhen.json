@@ -1,102 +1,162 @@
 [
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin0_end165.log",
         "pageCount":69,
         "totalCount":2047,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp0ep165/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp0ep165/",
+        "xlsxFile":"HouseData_begin0_end165.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin165_end210.log",
         "pageCount":74,
         "totalCount":2207,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp165ep210/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp165ep210/",
+        "xlsxFile":"HouseData_begin165_end210.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin210_end245.log",
         "pageCount":72,
         "totalCount":2152,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp210ep245/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp210ep245/",
+        "xlsxFile":"HouseData_begin210_end245.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin245_end275.log",
         "pageCount":73,
         "totalCount":2178,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp245ep275/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp245ep275/",
+        "xlsxFile":"HouseData_begin245_end275.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin275_end300.log",
         "pageCount":68,
         "totalCount":2015,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp275ep300/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp275ep300/",
+        "xlsxFile":"HouseData_begin275_end300.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin300_end325.log",
         "pageCount":81,
         "totalCount":2423,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp300ep325/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp300ep325/",
+        "xlsxFile":"HouseData_begin300_end325.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin325_end355.log",
         "pageCount":86,
         "totalCount":2573,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp325ep355/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp325ep355/",
+        "xlsxFile":"HouseData_begin325_end355.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin355_end385.log",
         "pageCount":82,
         "totalCount":2441,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp355ep385/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp355ep385/",
+        "xlsxFile":"HouseData_begin355_end385.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin385_end415.log",
         "pageCount":74,
         "totalCount":2194,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp385ep415/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp385ep415/",
+        "xlsxFile":"HouseData_begin385_end415.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin415_end450.log",
         "pageCount":71,
         "totalCount":2127,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp415ep450/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp415ep450/",
+        "xlsxFile":"HouseData_begin415_end450.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin450_end485.log",
         "pageCount":82,
         "totalCount":2453,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp450ep485/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp450ep485/",
+        "xlsxFile":"HouseData_begin450_end485.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin485_end525.log",
         "pageCount":75,
         "totalCount":2225,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp485ep525/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp485ep525/",
+        "xlsxFile":"HouseData_begin485_end525.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin525_end570.log",
         "pageCount":70,
         "totalCount":2098,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp525ep570/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp525ep570/",
+        "xlsxFile":"HouseData_begin525_end570.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin570_end625.log",
         "pageCount":69,
         "totalCount":2044,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp570ep625/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp570ep625/",
+        "xlsxFile":"HouseData_begin570_end625.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin625_end700.log",
         "pageCount":67,
         "totalCount":2004,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp625ep700/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp625ep700/",
+        "xlsxFile":"HouseData_begin625_end700.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin700_end800.log",
         "pageCount":68,
         "totalCount":2032,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp700ep800/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp700ep800/",
+        "xlsxFile":"HouseData_begin700_end800.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin800_end945.log",
         "pageCount":67,
         "totalCount":2006,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp800ep945/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp800ep945/",
+        "xlsxFile":"HouseData_begin800_end945.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin945_end1205.log",
         "pageCount":67,
         "totalCount":2005,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp945ep1205/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp945ep1205/",
+        "xlsxFile":"HouseData_begin945_end1205.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin1205_end1800.log",
         "pageCount":72,
         "totalCount":2149,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp1205ep1800/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp1205ep1800/",
+        "xlsxFile":"HouseData_begin1205_end1800.xlsx"
     },
     {
+        "city":"shenzhen",
+        "logFile":"worker_begin1800_end9500.log",
         "pageCount":57,
         "totalCount":1707,
-        "url":"https://sz.lianjia.com/ershoufang/pgbp1800ep9500/"
+        "url":"https://sz.lianjia.com/ershoufang/pgbp1800ep9500/",
+        "xlsxFile":"HouseData_begin1800_end9500.xlsx"
     }
 ]

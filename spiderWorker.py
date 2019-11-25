@@ -26,12 +26,6 @@ class spiderWorker:
         self.cityConstant = cityConstant()
         self.getIpProxy = GetIpProxy()
         self.url = u''
-        # debug
-        #self.url = 'https://bj.lianjia.com/ershoufang/pinggu/pg/'.replace('pg','pg{0}')
-        #self.totalCount = 90
-        #self.pageCount = 3
-        #self.xlsPathIdentifier = 'pinggu'
-        #self.city = 'beijing'
         self.infos = {}
         self.proxyServer = ()
         # 传参使用进行Excel生成
@@ -58,6 +52,42 @@ class spiderWorker:
         self.logger = open(os.path.join(self.outputFolder, 'worker_{0}.log'.format(
             self.xlsPathIdentifier)), 'w', encoding='utf-8')
 
+    # 0）准备工作
+    # 新的便捷初始化函数，只要按约定 keys 传入 json 即可
+    def prepareWithJson(self, jsonData, taskIndex=1):
+        # e.g.
+        # {
+        #     "city":"beijing",
+        #     "logFile":"worker_begin375_end390.log",
+        #     "pageCount":91,
+        #     "totalCount":2718,
+        #     "url":"https://bj.lianjia.com/ershoufang/pgbp375ep390/",
+        #     "xlsxFile":"HouseData_begin375_end390.xlsx"
+        # }
+        keyCity = u'city'
+        keyLogFile = u'logFile'
+        keyPageCount = u'pageCount'
+        keyTotalCount = u'totalCount'
+        keyUrl = u'url'
+        keyXlsxFile = u'xlsxFile'
+        # 初始化
+        self.jsonData = jsonData
+        self.url = str(jsonData[keyUrl]).replace('pg', 'pg{0}')
+        self.totalCount = int(jsonData[keyTotalCount])
+        self.pageCount = int(jsonData[keyPageCount])
+        self.xlsxPath = jsonData[keyXlsxFile]
+        self.city = jsonData[keyCity]
+        self.dateFolder = time.strftime("%Y%m", time.localtime())
+        self.taskIndex = taskIndex
+        # logger 初始化
+        self.outputFolder = os.path.join(
+            os.getcwd(), u'output', self.city, self.dateFolder)
+        if not os.path.exists(self.outputFolder):
+            os.makedirs(self.outputFolder)
+        #self.logger = logger(os.path.join(self.outputFolder, 'worker_{0}.log'.format(self.xlsPathIdentifier)))
+        self.logger = open(os.path.join(self.outputFolder,
+                                        jsonData[keyLogFile]), 'w', encoding='utf-8')
+
     # 1）开始
     def start(self):
         assert self.url != '', u'[ERROR] 应该先调用 prepare 函数进行初始化再使用'
@@ -67,8 +97,10 @@ class spiderWorker:
             # self.logger.log.info(i)
             self.logger.write(i + '\n')
         path = os.path.join(
-            self.outputFolder, 'HouseData_{0}.xlsx'.format(self.xlsPathIdentifier))
+            self.outputFolder, self.xlsxPath)
         self.generateExcel.saveExcel(path)
+        self.logger.write('写入完毕')
+        self.logger.flush()
         self.logger.close()
 
     # 2）生成需要生成页数的链接
@@ -158,7 +190,8 @@ class spiderWorker:
             self.infos[u'城市'] = self.cityConstant.cityToChinese[self.city]
 
             # self.logger.log.info('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%'.format(self.totalCount,round(float(row)/self.totalCount * 100, 2)))
-            print('pid: [' + str(os.getppid()) + '] taskId: ' + str(self.taskIndex) + ' row: ' + str(row) + ' / {0} {1}%\n'.format(self.totalCount, round(float(row)/self.totalCount * 100, 2)))
+            print('pid: [' + str(os.getppid()) + '] taskId: ' + str(self.taskIndex) + ' row: ' + str(
+                row) + ' / {0} {1}%\n'.format(self.totalCount, round(float(row)/self.totalCount * 100, 2)))
             self.logger.write('taskId: ' + str(self.taskIndex) + ' row: ' + str(row) +
                               ' / {0} {1}%\n'.format(self.totalCount, round(float(row)/self.totalCount * 100, 2)))
             self.logger.flush()
@@ -245,7 +278,7 @@ class spiderWorker:
                                                          item_valus)
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     if len(sys.argv) >= 5:
         print(u'[Params] {0} {1} {2} {3} {4}'.format(
             sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]))

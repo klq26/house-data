@@ -2,6 +2,7 @@
 
 # 修改默认抓取数据,进行数据优化
 
+
 class elementConstant:
     def __init__(self):
         self.data_constant = {}
@@ -9,9 +10,9 @@ class elementConstant:
         index = 0
 
     def init_source_data(self):
-        
+
         # 序号
-        self.data_constant[u'序号'] = 0  
+        self.data_constant[u'序号'] = 0
         # 链家编号
         self.data_constant[u'链家编号'] = 1
         # 状态（基本无用，手写的在售）
@@ -21,7 +22,7 @@ class elementConstant:
         # 建筑面积：平米
         self.data_constant[u'建筑面积'] = 4
         # 套内面积
-        self.data_constant[u'套内面积'] = 5 
+        self.data_constant[u'套内面积'] = 5
         # 房屋总价
         self.data_constant[u'总价'] = 6
         # 挂牌时间 挂牌时间
@@ -80,8 +81,8 @@ class elementConstant:
         # 看过房源 看过房源：人
         self.data_constant[u'看过房源人数'] = 33
 
-
     # 根据字段名称，返回写入 Excel 表中的列号
+
     def column_position(self, temp_data):
         return self.data_constant.get(temp_data)
 
