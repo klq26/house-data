@@ -3,232 +3,232 @@
         "city":"shanghai",
         "logFile":"worker_begin0_end145.log",
         "pageCount":72,
-        "totalCount":2142,
+        "totalCount":2132,
         "url":"https://sh.lianjia.com/ershoufang/pgbp0ep145/",
         "xlsxFile":"HouseData_begin0_end145.xlsx"
     },
     {
         "city":"shanghai",
         "logFile":"worker_begin145_end175.log",
-        "pageCount":80,
-        "totalCount":2391,
+        "pageCount":78,
+        "totalCount":2313,
         "url":"https://sh.lianjia.com/ershoufang/pgbp145ep175/",
         "xlsxFile":"HouseData_begin145_end175.xlsx"
     },
     {
         "city":"shanghai",
         "logFile":"worker_begin175_end195.log",
-        "pageCount":82,
-        "totalCount":2448,
+        "pageCount":79,
+        "totalCount":2354,
         "url":"https://sh.lianjia.com/ershoufang/pgbp175ep195/",
         "xlsxFile":"HouseData_begin175_end195.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin195_end210.log",
-        "pageCount":68,
-        "totalCount":2040,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp195ep210/",
-        "xlsxFile":"HouseData_begin195_end210.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin210_end225.log",
-        "pageCount":73,
-        "totalCount":2169,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp210ep225/",
-        "xlsxFile":"HouseData_begin210_end225.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin225_end240.log",
-        "pageCount":73,
-        "totalCount":2173,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp225ep240/",
-        "xlsxFile":"HouseData_begin225_end240.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin240_end255.log",
-        "pageCount":70,
-        "totalCount":2082,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp240ep255/",
-        "xlsxFile":"HouseData_begin240_end255.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin255_end270.log",
-        "pageCount":72,
-        "totalCount":2144,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp255ep270/",
-        "xlsxFile":"HouseData_begin255_end270.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin270_end285.log",
-        "pageCount":74,
-        "totalCount":2207,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp270ep285/",
-        "xlsxFile":"HouseData_begin270_end285.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin285_end300.log",
-        "pageCount":73,
-        "totalCount":2171,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp285ep300/",
-        "xlsxFile":"HouseData_begin285_end300.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin300_end315.log",
-        "pageCount":70,
-        "totalCount":2097,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp300ep315/",
-        "xlsxFile":"HouseData_begin300_end315.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin315_end335.log",
+        "logFile":"worker_begin195_end215.log",
         "pageCount":90,
-        "totalCount":2678,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp315ep335/",
-        "xlsxFile":"HouseData_begin315_end335.xlsx"
+        "totalCount":2695,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp195ep215/",
+        "xlsxFile":"HouseData_begin195_end215.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin335_end355.log",
-        "pageCount":77,
-        "totalCount":2286,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp335ep355/",
-        "xlsxFile":"HouseData_begin335_end355.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin355_end375.log",
-        "pageCount":72,
-        "totalCount":2145,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp355ep375/",
-        "xlsxFile":"HouseData_begin355_end375.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin375_end400.log",
-        "pageCount":80,
-        "totalCount":2392,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp375ep400/",
-        "xlsxFile":"HouseData_begin375_end400.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin400_end425.log",
+        "logFile":"worker_begin215_end230.log",
         "pageCount":70,
-        "totalCount":2086,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp400ep425/",
-        "xlsxFile":"HouseData_begin400_end425.xlsx"
+        "totalCount":2089,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp215ep230/",
+        "xlsxFile":"HouseData_begin215_end230.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin425_end455.log",
+        "logFile":"worker_begin230_end245.log",
+        "pageCount":72,
+        "totalCount":2136,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp230ep245/",
+        "xlsxFile":"HouseData_begin230_end245.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin245_end260.log",
+        "pageCount":68,
+        "totalCount":2030,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp245ep260/",
+        "xlsxFile":"HouseData_begin245_end260.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin260_end275.log",
+        "pageCount":70,
+        "totalCount":2091,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp260ep275/",
+        "xlsxFile":"HouseData_begin260_end275.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin275_end290.log",
+        "pageCount":75,
+        "totalCount":2229,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp275ep290/",
+        "xlsxFile":"HouseData_begin275_end290.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin290_end305.log",
+        "pageCount":69,
+        "totalCount":2060,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp290ep305/",
+        "xlsxFile":"HouseData_begin290_end305.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin305_end325.log",
+        "pageCount":91,
+        "totalCount":2706,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp305ep325/",
+        "xlsxFile":"HouseData_begin305_end325.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin325_end345.log",
+        "pageCount":76,
+        "totalCount":2255,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp325ep345/",
+        "xlsxFile":"HouseData_begin325_end345.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin345_end365.log",
+        "pageCount":76,
+        "totalCount":2260,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp345ep365/",
+        "xlsxFile":"HouseData_begin345_end365.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin365_end390.log",
         "pageCount":80,
-        "totalCount":2389,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp425ep455/",
-        "xlsxFile":"HouseData_begin425_end455.xlsx"
+        "totalCount":2393,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp365ep390/",
+        "xlsxFile":"HouseData_begin365_end390.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin455_end490.log",
-        "pageCount":74,
-        "totalCount":2207,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp455ep490/",
-        "xlsxFile":"HouseData_begin455_end490.xlsx"
+        "logFile":"worker_begin390_end415.log",
+        "pageCount":69,
+        "totalCount":2070,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp390ep415/",
+        "xlsxFile":"HouseData_begin390_end415.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin490_end530.log",
+        "logFile":"worker_begin415_end440.log",
+        "pageCount":71,
+        "totalCount":2125,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp415ep440/",
+        "xlsxFile":"HouseData_begin415_end440.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin440_end470.log",
         "pageCount":68,
         "totalCount":2022,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp490ep530/",
-        "xlsxFile":"HouseData_begin490_end530.xlsx"
+        "url":"https://sh.lianjia.com/ershoufang/pgbp440ep470/",
+        "xlsxFile":"HouseData_begin440_end470.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin530_end580.log",
-        "pageCount":70,
-        "totalCount":2084,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp530ep580/",
-        "xlsxFile":"HouseData_begin530_end580.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin580_end635.log",
-        "pageCount":72,
-        "totalCount":2141,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp580ep635/",
-        "xlsxFile":"HouseData_begin580_end635.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin635_end700.log",
-        "pageCount":67,
-        "totalCount":2007,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp635ep700/",
-        "xlsxFile":"HouseData_begin635_end700.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin700_end770.log",
-        "pageCount":68,
-        "totalCount":2011,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp700ep770/",
-        "xlsxFile":"HouseData_begin700_end770.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin770_end855.log",
-        "pageCount":74,
-        "totalCount":2214,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp770ep855/",
-        "xlsxFile":"HouseData_begin770_end855.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin855_end965.log",
-        "pageCount":68,
-        "totalCount":2013,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp855ep965/",
-        "xlsxFile":"HouseData_begin855_end965.xlsx"
-    },
-    {
-        "city":"shanghai",
-        "logFile":"worker_begin965_end1155.log",
+        "logFile":"worker_begin470_end505.log",
         "pageCount":69,
-        "totalCount":2064,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp965ep1155/",
-        "xlsxFile":"HouseData_begin965_end1155.xlsx"
+        "totalCount":2046,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp470ep505/",
+        "xlsxFile":"HouseData_begin470_end505.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin1155_end1435.log",
-        "pageCount":67,
-        "totalCount":2003,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp1155ep1435/",
-        "xlsxFile":"HouseData_begin1155_end1435.xlsx"
+        "logFile":"worker_begin505_end555.log",
+        "pageCount":78,
+        "totalCount":2328,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp505ep555/",
+        "xlsxFile":"HouseData_begin505_end555.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin1435_end2300.log",
+        "logFile":"worker_begin555_end610.log",
+        "pageCount":68,
+        "totalCount":2034,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp555ep610/",
+        "xlsxFile":"HouseData_begin555_end610.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin610_end675.log",
         "pageCount":71,
-        "totalCount":2106,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp1435ep2300/",
-        "xlsxFile":"HouseData_begin1435_end2300.xlsx"
+        "totalCount":2122,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp610ep675/",
+        "xlsxFile":"HouseData_begin610_end675.xlsx"
     },
     {
         "city":"shanghai",
-        "logFile":"worker_begin2300_end10000.log",
-        "pageCount":50,
-        "totalCount":1490,
-        "url":"https://sh.lianjia.com/ershoufang/pgbp2300ep9500/",
-        "xlsxFile":"HouseData_begin2300_end10000.xlsx"
+        "logFile":"worker_begin675_end745.log",
+        "pageCount":69,
+        "totalCount":2063,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp675ep745/",
+        "xlsxFile":"HouseData_begin675_end745.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin745_end825.log",
+        "pageCount":70,
+        "totalCount":2099,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp745ep825/",
+        "xlsxFile":"HouseData_begin745_end825.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin825_end925.log",
+        "pageCount":70,
+        "totalCount":2086,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp825ep925/",
+        "xlsxFile":"HouseData_begin825_end925.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin925_end1090.log",
+        "pageCount":68,
+        "totalCount":2021,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp925ep1090/",
+        "xlsxFile":"HouseData_begin925_end1090.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin1090_end1325.log",
+        "pageCount":67,
+        "totalCount":2000,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp1090ep1325/",
+        "xlsxFile":"HouseData_begin1090_end1325.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin1325_end1900.log",
+        "pageCount":73,
+        "totalCount":2170,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp1325ep1900/",
+        "xlsxFile":"HouseData_begin1325_end1900.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin1900_end6000.log",
+        "pageCount":68,
+        "totalCount":2022,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp1900ep6000/",
+        "xlsxFile":"HouseData_begin1900_end6000.xlsx"
+    },
+    {
+        "city":"shanghai",
+        "logFile":"worker_begin6000_end10000.log",
+        "pageCount":4,
+        "totalCount":102,
+        "url":"https://sh.lianjia.com/ershoufang/pgbp6000ep9500/",
+        "xlsxFile":"HouseData_begin6000_end10000.xlsx"
     }
 ]

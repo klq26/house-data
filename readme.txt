@@ -6,3 +6,5 @@
 4. 之后用 python sailingInfoSpider.py unfinished_1 这样的命令，逐一执行残留任务。json 文件指明了保存 xlsx 文件的路径，不会出错。
 
 5. 尝试在 worker.py 中增加 time.sleep(x) 降低查询频率，防止被服务器拒绝。（目前看无此需要）
+
+P.S. 如果想使用代理访问，增加访问函数后，别忘了增加 import random，否则 exception as e 会抓到异常，说不认识 random

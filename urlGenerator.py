@@ -3,10 +3,13 @@ import sys
 import re
 import json
 import time
+import random
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 from model.cityConstant import cityConstant
+from agentAndProxies import hds
+from agentAndProxies import GetIpProxy
 
 
 class urlGenerator:
@@ -21,6 +24,34 @@ class urlGenerator:
             '.lianjia.com/ershoufang/pgbp{0}ep{1}/'
         self.logFileHolder = u'worker_begin{0}_end{1}.log'
         self.outputFileHolder = u'HouseData_begin{0}_end{1}.xlsx'
+
+# 封装统一 request 请求，采取动态代理和动态修改 User-Agent 方式进行访问设置，减少服务端手动暂停的问题
+    def requestUrlByProxy(self, url):
+        try:
+            if len(self.proxyServer) == 0:
+                tempProxyServer = self.getIpProxy.get_random_ip()
+            else:
+                tempProxyServer = self.proxyServer
+
+            proxy_dict = {
+                tempProxyServer[0]: tempProxyServer[1]
+            }
+            tempUrl = requests.get(
+                url, headers=hds[random.randint(0, len(hds) - 1)], proxies=proxy_dict)
+
+            code = tempUrl.status_code
+            if code >= 200 or code < 300:
+                self.proxyServer = tempProxyServer
+                return tempUrl
+            else:
+                self.proxyServer = self.getIpProxy.get_random_ip()
+                return self.requestUrlByProxy(url)
+        except Exception as e:
+            self.proxyServer = self.getIpProxy.get_random_ip()
+            s = requests.session()
+            s.keep_alive = False
+            return self.requestUrlByProxy(url)
+
 
     # 把 0w ~ 10000w 的房屋信息近似分成 2000+ 一个区间，供后续 worker 抓取信息
     def intelligentDetect(self, interval=5, expectLow=2000, expectHigh=3000):
@@ -45,7 +76,9 @@ class urlGenerator:
         5）因为房价超过 1500w 的房子在中国是少数，所以当上边界达到 1500w 时，interval 变成 100。当上边界达到 2500w 时，interval 变成 500。这是为了提高执行效率
         5）最后，把所有的价格区间，输出到文件
         """
-
+        # 创建动态 IP 池
+        self.getIpProxy = GetIpProxy()
+        
         # 当总数不到 expectLow 即 2000 且上边界没超过 10000 时，继续执行
         while totalCount < expectLow and end <= max + 200:
             # 房屋价格超过 1500w 和 2500w 时，提高 interval，加快执行速度
@@ -55,7 +88,8 @@ class urlGenerator:
                 interval = 500
             url = self.urlHolder.format(begin, end)
             requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-            response = requests.get(url.replace('pg', 'pg1'), verify=False)
+            #response = requests.get(url.replace('pg', 'pg1'), verify=False)
+            response = self.requestUrlByProxy(url.replace('pg', 'pg1'))
             #print(u'检查 URL：{0}'.format(url))
             partent = re.compile(
                 '<h2 class="total fl">.*?<span>\s*(.*?)\s</span>.*?</h2>')
