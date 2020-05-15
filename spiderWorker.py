@@ -122,12 +122,12 @@ class spiderWorker:
                 # self.logger.log.info(re_get[index])
                 self.logger.write(re_get[index] + '\n')
                 # 增加休眠时间，防止服务器拒绝
-                # time.sleep(1.5)
+                time.sleep(3)
 
     # 4）爬取每一套房屋 SKU 的详细数据
     def open_url(self, re_get, index):
         res = self.requestUrlForRe(re_get)
-        if res.status_code == 200:
+        if res.status_code == 200 and len(res.text) > 0:
             soup = BeautifulSoup(res.text, 'lxml')
             self.infos[u'网址'] = re_get
             self.infos[u'标题'] = soup.select('.main')[0].text
